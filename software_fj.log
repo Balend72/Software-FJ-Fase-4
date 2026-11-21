@@ -1,0 +1,128 @@
+2026-11-20 15:47:38,031 | INFO | Cliente registrado: C001.
+2026-11-20 15:47:38,032 | ERROR | Prueba 2: Rechazo de correo inválido
+Traceback (most recent call last):
+  File "/mnt/data/software_fj_work/Software-FJ-Fase-4/main.py", line 308, in execute
+    result = operation()
+  File "/mnt/data/software_fj_work/Software-FJ-Fase-4/main.py", line 327, in <lambda>
+    lambda: Client("C002", "Luis Díaz", "correo-invalido", "3101234567"),
+            ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/software_fj_work/Software-FJ-Fase-4/main.py", line 52, in __init__
+    self.email = email
+    ^^^^^^^^^^
+  File "/mnt/data/software_fj_work/Software-FJ-Fase-4/main.py", line 74, in email
+    raise ValidationError("El correo electrónico no es válido.")
+ValidationError: El correo electrónico no es válido.
+2026-11-20 15:47:38,033 | INFO | Cliente registrado: C003.
+2026-11-20 15:47:38,033 | INFO | Servicio registrado: S001.
+2026-11-20 15:47:38,033 | INFO | Servicio registrado: S002.
+2026-11-20 15:47:38,033 | INFO | Servicio registrado: S003.
+2026-11-20 15:47:38,033 | ERROR | Prueba 7: Rechazo de tarifa negativa
+Traceback (most recent call last):
+  File "/mnt/data/software_fj_work/Software-FJ-Fase-4/main.py", line 308, in execute
+    result = operation()
+  File "/mnt/data/software_fj_work/Software-FJ-Fase-4/main.py", line 349, in <lambda>
+    execute(7, "Rechazo de tarifa negativa", lambda: RoomReservation("S004", -100, 10))
+                                                     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/software_fj_work/Software-FJ-Fase-4/main.py", line 134, in __init__
+    super().__init__(service_id, "Reserva de salas", hourly_rate, available)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/software_fj_work/Software-FJ-Fase-4/main.py", line 102, in __init__
+    raise ValidationError("La tarifa debe ser un número positivo.")
+ValidationError: La tarifa debe ser un número positivo.
+2026-11-20 15:47:38,033 | INFO | Reserva creada: R001.
+2026-11-20 15:47:38,033 | INFO | Reserva R001 confirmada.
+2026-11-20 15:47:38,033 | INFO | Reserva R001 procesada por 100000.00.
+2026-11-20 15:47:38,033 | INFO | Finalizó el intento de procesamiento R001.
+2026-11-20 15:47:38,033 | ERROR | Prueba 9: Rechazo de duración cero
+Traceback (most recent call last):
+  File "/mnt/data/software_fj_work/Software-FJ-Fase-4/main.py", line 308, in execute
+    result = operation()
+  File "/mnt/data/software_fj_work/Software-FJ-Fase-4/main.py", line 359, in <lambda>
+    lambda: app.create_reservation("R002", "C001", "S001", 0),
+            ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/software_fj_work/Software-FJ-Fase-4/main.py", line 296, in create_reservation
+    reservation = Reservation(reservation_id, client, service, duration)
+  File "/mnt/data/software_fj_work/Software-FJ-Fase-4/main.py", line 215, in __init__
+    raise ValidationError("La duración debe ser mayor que cero.")
+ValidationError: La duración debe ser mayor que cero.
+2026-11-20 15:47:38,034 | ERROR | Prueba 10: Rechazo de cliente inexistente
+Traceback (most recent call last):
+  File "/mnt/data/software_fj_work/Software-FJ-Fase-4/main.py", line 308, in execute
+    result = operation()
+  File "/mnt/data/software_fj_work/Software-FJ-Fase-4/main.py", line 363, in <lambda>
+    lambda: app.create_reservation("R003", "C999", "S001", 1),
+            ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/data/software_fj_work/Software-FJ-Fase-4/main.py", line 292, in create_reservation
+    raise ValidationError(f"No existe el cliente {client_id}.")
+ValidationError: No existe el cliente C999.
+2026-11-20 15:47:38,034 | INFO | Reserva creada: R004.
+2026-11-20 15:47:38,034 | ERROR | Error al procesar la reserva R004.
+Traceback (most recent call last):
+  File "/mnt/data/software_fj_work/Software-FJ-Fase-4/main.py", line 238, in process
+    raise ReservationStateError(
+        "La reserva debe estar confirmada antes de procesarse."
+    )
+ReservationStateError: La reserva debe estar confirmada antes de procesarse.
+2026-11-20 15:47:38,034 | INFO | Finalizó el intento de procesamiento R004.
+2026-11-20 15:47:38,034 | ERROR | Prueba 11: Procesamiento sin confirmar (excepción encadenada)
+Traceback (most recent call last):
+  File "/mnt/data/software_fj_work/Software-FJ-Fase-4/main.py", line 238, in process
+    raise ReservationStateError(
+        "La reserva debe estar confirmada antes de procesarse."
+    )
+ReservationStateError: La reserva debe estar confirmada antes de procesarse.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/mnt/data/software_fj_work/Software-FJ-Fase-4/main.py", line 308, in execute
+    result = operation()
+  File "/mnt/data/software_fj_work/Software-FJ-Fase-4/main.py", line 367, in <lambda>
+    lambda: app.create_reservation("R004", "C003", "S002", 1).process(),
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/mnt/data/software_fj_work/Software-FJ-Fase-4/main.py", line 244, in process
+    raise RuntimeError(
+        f"No fue posible procesar la reserva {self.id}."
+    ) from exc
+RuntimeError: No fue posible procesar la reserva R004.
+2026-11-20 15:47:38,034 | INFO | Reserva creada: R005.
+2026-11-20 15:47:38,034 | INFO | Reserva R005 cancelada.
+2026-11-20 15:47:38,034 | INFO | Servicio registrado: S005.
+2026-11-20 15:47:38,034 | INFO | Reserva creada: R006.
+2026-11-20 15:47:38,034 | ERROR | Prueba 13: Rechazo de servicio no disponible
+Traceback (most recent call last):
+  File "/mnt/data/software_fj_work/Software-FJ-Fase-4/main.py", line 308, in execute
+    result = operation()
+  File "/mnt/data/software_fj_work/Software-FJ-Fase-4/main.py", line 382, in unavailable_service
+    reservation.confirm()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "/mnt/data/software_fj_work/Software-FJ-Fase-4/main.py", line 225, in confirm
+    raise ServiceUnavailableError("El servicio no está disponible.")
+ServiceUnavailableError: El servicio no está disponible.
+2026-11-20 15:47:38,724 | INFO | Cliente registrado: C1.
+2026-11-20 15:47:38,724 | INFO | Servicio registrado: S1.
+2026-11-20 15:47:38,724 | INFO | Cliente registrado: C1.
+2026-11-20 15:47:38,724 | INFO | Servicio registrado: S1.
+2026-11-20 15:47:38,724 | INFO | Cliente registrado: C1.
+2026-11-20 15:47:38,724 | INFO | Servicio registrado: S1.
+2026-11-20 15:47:38,724 | INFO | Cliente registrado: C1.
+2026-11-20 15:47:38,724 | INFO | Servicio registrado: S1.
+2026-11-20 15:47:38,724 | INFO | Reserva creada: R1.
+2026-11-20 15:47:38,724 | INFO | Reserva R1 confirmada.
+2026-11-20 15:47:38,724 | INFO | Reserva R1 procesada por 100000.00.
+2026-11-20 15:47:38,724 | INFO | Finalizó el intento de procesamiento R1.
+2026-11-20 15:47:38,725 | INFO | Cliente registrado: C1.
+2026-11-20 15:47:38,725 | INFO | Servicio registrado: S1.
+2026-11-20 15:47:38,725 | INFO | Servicio registrado: S2.
+2026-11-20 15:47:38,725 | INFO | Reserva creada: R2.
+2026-11-20 15:47:38,725 | INFO | Cliente registrado: C1.
+2026-11-20 15:47:38,725 | INFO | Servicio registrado: S1.
+2026-11-20 15:47:38,725 | INFO | Reserva creada: R1.
+2026-11-20 15:47:38,725 | ERROR | Error al procesar la reserva R1.
+Traceback (most recent call last):
+  File "/mnt/data/software_fj_work/Software-FJ-Fase-4/main.py", line 238, in process
+    raise ReservationStateError(
+        "La reserva debe estar confirmada antes de procesarse."
+    )
+main.ReservationStateError: La reserva debe estar confirmada antes de procesarse.
+2026-11-20 15:47:38,725 | INFO | Finalizó el intento de procesamiento R1.
